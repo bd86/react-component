@@ -2,11 +2,28 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var CommentBox = React.createClass({
+
+  handleCommentSubmit: function (email) {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: email,
+      success: function(data) {
+        console.log(data);
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   render: function () {
     return (
       <div className="commentBox">
         <h1>Email Form</h1>
-        <CommentForm />
+        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );
   }
@@ -36,13 +53,14 @@ var CommentForm = React.createClass({
   handleSubmit: function (e) {
     e.preventDefault();
     var email = this.state.email.trim();
-    console.log(email);
+    //console.log(email);
     if(!email){
       return;
     }
+    this.props.onCommentSubmit({email: email});
     this.setState({email: ''});
   },
-//test
+
   render: function () {
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
@@ -60,9 +78,9 @@ var Comment = React.createClass({
   render: function () {
     return (
       <div className="comment">
-        <h2 className="commentAuthor">
+        <h1 className="commentAuthor">
           {this.props.author}
-        </h2>
+        </h1>
         {this.props.children}
       </div>
     );
@@ -70,6 +88,6 @@ var Comment = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox />,
+  <CommentBox url="/test.php" />,
   document.getElementById('app')
 );
