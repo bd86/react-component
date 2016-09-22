@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "production": "webpack -p",
-    "start": "webpack-dev-server"
+    "dev": "webpack-dev-server"
   },
   "author": "",
   "license": "MIT",
