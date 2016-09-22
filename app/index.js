@@ -42,7 +42,7 @@ var CommentForm = React.createClass({
     }
     this.setState({email: ''});
   },
-
+//test
   render: function () {
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
