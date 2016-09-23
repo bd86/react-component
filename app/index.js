@@ -1,9 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var CommentBox = React.createClass({
-
-  handleCommentSubmit: function (email) {
+class CommentBox extends React.Component {
+  
+  handleCommentSubmit() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -17,77 +17,56 @@ var CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
-  render: function () {
-    return (
+  render() {
+    return(
       <div className="commentBox">
         <h1>Email Form</h1>
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
-    );
-  }
-});
-
-var CommentList = React.createClass({
-  render: function () {
-    return (
-      <div className="commentList">
-        <Comment author="bryan">This is my comment!</Comment>
-      </div>
     )
   }
-});
 
-var CommentForm = React.createClass({
+}
 
-  getInitialState: function () {
-    return {email: ''};
-  },
+class CommentForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {email: ''};
+  }
 
-  handleEmailChange: function (e) {
-    //console.log(e.target.value);
+  handleEmailChange(e) {
     this.setState({email: e.target.value});
-  },
+  }
 
-  handleSubmit: function (e) {
+  handleSubmit(e) {
     e.preventDefault();
-    var email = this.state.email.trim();
-    //console.log(email);
-    if(!email){
+    let email = this.state.email.trim();
+    if(!email) {
       return;
     }
     this.props.onCommentSubmit({email: email});
     this.setState({email: ''});
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <form className="commentForm" onSubmit={this.handleSubmit}>
         <input type="text"
-               placeholder="Enter your email address"
-               value={this.state.email}
-               onChange={this.handleEmailChange} />
+                placeholder="Enter your email address"
+                value={this.state.email}
+                onChange={this.handleEmailChange} />
         <input type="submit" value="Post" />
       </form>
     );
   }
-});
 
-var Comment = React.createClass({
-  render: function () {
-    return (
-      <div className="comment">
-        <h1 className="commentAuthor">
-          {this.props.author}
-        </h1>
-        {this.props.children}
-      </div>
-    );
-  }
-});
+}
+
 
 ReactDOM.render(
-  <CommentBox url="/test.php" />,
+  //localhost:8000
+  <CommentBox url="http://localhost:8000/test.php" />,
   document.getElementById('app')
 );
