@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from "jquery";
 
 class CommentBox extends React.Component {
   
-  handleCommentSubmit() {
+  constructor(props) {
+    super(props);
+    this.handleCommentSubmit = this.handleCommentSubmit.bind(this)
+  }
+
+  handleCommentSubmit(email) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -25,7 +31,7 @@ class CommentBox extends React.Component {
         <h1>Email Form</h1>
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>
-    )
+    );
   }
 
 }
@@ -34,9 +40,12 @@ class CommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {email: ''};
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleEmailChange(e) {
+    console.log(e.target.value);
     this.setState({email: e.target.value});
   }
 
@@ -67,6 +76,6 @@ class CommentForm extends React.Component {
 
 ReactDOM.render(
   //localhost:8000
-  <CommentBox url="http://localhost:8000/test.php" />,
+  <CommentBox url="http://localhost:8000/submit.php" />,
   document.getElementById('app')
 );
