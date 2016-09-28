@@ -2,10 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from "jquery";
 
-const divStyle = {
+const TopForm = {
+  form: {
     backgroundColor: "#0b243b",
     marginBottom: 50,
+    color: "white"
+  },
+  btn: {
+    backgroundColor: "#fed176",
+    color: "#0b243b",
+    border: "none",
+    fontSize: 2.2+"em"
+  }
 }
+
+const BottomForm = {
+  backgroundColor: "#00FF00",
+  marginBottom: 50,
+}
+
 
 class EmailsBox extends React.Component {
   
@@ -45,9 +60,15 @@ class EmailsBox extends React.Component {
 
   render() {
     return(
-      <div className="container" style={divStyle}>
-        <h1>Email Form</h1>
-        <EmailForm onEmailSubmit={this.handleEmailSubmit} />
+      <div className="container" style={this.props.formstyle.form}>
+        <EmailForm onEmailSubmit={this.handleEmailSubmit} btnstyle={this.props.formstyle.btn} />
+        <small>
+          <div className="text-center">
+            By submitting, you understand that you may receive periodic email
+            communications from Charisma House and that you may unsubscribe at any time.
+            <a href="/privacy-policy.html">Learn More.</a>
+          </div>
+        </small>
       </div>
     );
   }
@@ -80,9 +101,9 @@ class EmailForm extends React.Component {
   render() {
     return (
       <form className="EmailForm" onSubmit={this.handleSubmit}>
-        <div className="row">
+        <div className="row" style={{paddingTop:50}}>
           <div className="col-md-5 col-md-offset-2">
-            <input type="text"
+            <input type="email"
                     style={{height:65}}
                     placeholder="Enter your email address"
                     className="form-control input-lg"
@@ -90,7 +111,7 @@ class EmailForm extends React.Component {
                     onChange={this.handleEmailChange} />
           </div>
           <div className="col-xs-8 col-xs-offset-2 col-md-5 col-md-offset-0">
-            <input type="submit" value="Download Now" className="btn2 btn-lg btn-default"/>
+            <input type="submit" value="Download Now" style={this.props.btnstyle} className="btn btn-lg btn-default"/>
           </div>
         </div>
       </form>
@@ -99,15 +120,12 @@ class EmailForm extends React.Component {
 
 }
 
-
 ReactDOM.render(
-  //localhost:8000
-  <EmailsBox url="ajax/submit.php" />,
+  <EmailsBox url="ajax/submit.php" formstyle={TopForm} />,
   document.getElementById('form1')
 );
 
 ReactDOM.render(
-  //localhost:8000
-  <EmailsBox url="ajax/submit.php" />,
+  <EmailsBox url="ajax/submit.php" formstyle={BottomForm} />,
   document.getElementById('form2')
 );
