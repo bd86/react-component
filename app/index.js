@@ -4,6 +4,8 @@ import $ from "jquery";
 
 const TopForm = {
   form: {
+    paddingTop: 50,
+    paddingBottom: 50,
     backgroundColor: "#0b243b",
     marginBottom: 50,
     color: "white"
@@ -17,8 +19,19 @@ const TopForm = {
 }
 
 const BottomForm = {
-  backgroundColor: "#00FF00",
-  marginBottom: 50,
+  form: {
+    paddingTop: 50,
+    paddingBottom: 50,
+    backgroundColor: "#fed176",
+    marginBottom: 50,
+    color: "#0b243b"
+  },
+  btn: {
+    backgroundColor: "#0b243b",
+    color: "#fff",
+    border: "none",
+    fontSize: 2.2+"em"
+  }
 }
 
 
@@ -61,7 +74,7 @@ class EmailsBox extends React.Component {
   render() {
     return(
       <div className="container" style={this.props.formstyle.form}>
-        <EmailForm onEmailSubmit={this.handleEmailSubmit} btnstyle={this.props.formstyle.btn} />
+        <EmailForm onEmailSubmit={this.handleEmailSubmit} btnstyle={this.props.formstyle.btn} message={this.props.message} />
         <small>
           <div className="text-center">
             By submitting, you understand that you may receive periodic email
@@ -101,7 +114,8 @@ class EmailForm extends React.Component {
   render() {
     return (
       <form className="EmailForm" onSubmit={this.handleSubmit}>
-        <div className="row" style={{paddingTop:50}}>
+        <div className="row">
+          <p className="text-center">{this.props.message}</p>
           <div className="col-md-5 col-md-offset-2">
             <input type="email"
                     style={{height:65}}
@@ -121,7 +135,7 @@ class EmailForm extends React.Component {
 }
 
 ReactDOM.render(
-  <EmailsBox url="ajax/submit.php" formstyle={TopForm} />,
+  <EmailsBox url="ajax/submit.php" formstyle={TopForm} message="Download Your FREE Copy of BOOK TITLE"/>,
   document.getElementById('form1')
 );
 
