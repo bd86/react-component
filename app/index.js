@@ -62,7 +62,7 @@ class EmailsBox extends React.Component {
                             .removeClass('alert-success')
                             .addClass('alert-danger')
                             .show();
-            console.log('BAD');
+          console.log('BAD');
         }
       }.bind(this),
       error: function(xhr, status, err) {
@@ -74,7 +74,10 @@ class EmailsBox extends React.Component {
   render() {
     return(
       <div className="container" style={this.props.formstyle.form}>
-        <EmailForm onEmailSubmit={this.handleEmailSubmit} btnstyle={this.props.formstyle.btn} message={this.props.message} />
+        <EmailForm onEmailSubmit={this.handleEmailSubmit}
+                   btnstyle={this.props.formstyle.btn}
+                   message={this.props.message}
+                   title={this.props.title} />
         <small>
           <div className="text-center">
             By submitting, you understand that you may receive periodic email
@@ -115,7 +118,7 @@ class EmailForm extends React.Component {
     return (
       <form className="EmailForm" onSubmit={this.handleSubmit}>
         <div className="row">
-          <p className="text-center">{this.props.message}</p>
+          <p className="text-center" style={{fontSize:2.4+"em"}}>{this.props.message}<i>{this.props.title}</i></p>
           <div className="col-md-5 col-md-offset-2">
             <input type="email"
                     style={{height:65}}
@@ -125,7 +128,7 @@ class EmailForm extends React.Component {
                     onChange={this.handleEmailChange} />
           </div>
           <div className="col-xs-8 col-xs-offset-2 col-md-5 col-md-offset-0">
-            <input type="submit" value="Download Now" style={this.props.btnstyle} className="btn btn-lg btn-default"/>
+            <input type="submit" value="Download Now" style={this.props.btnstyle} className="btn btn-lg btn-default" />
           </div>
         </div>
       </form>
@@ -135,11 +138,15 @@ class EmailForm extends React.Component {
 }
 
 ReactDOM.render(
-  <EmailsBox url="ajax/submit.php" formstyle={TopForm} message="Download Your FREE Copy of BOOK TITLE"/>,
+  <EmailsBox url="ajax/submit.php"
+             formstyle={TopForm} />,
   document.getElementById('form1')
 );
 
 ReactDOM.render(
-  <EmailsBox url="ajax/submit.php" formstyle={BottomForm} />,
+  <EmailsBox url="ajax/submit.php"
+             formstyle={BottomForm}
+             message="Download Your FREE Copy of "
+             title="Book Title" />,
   document.getElementById('form2')
 );
